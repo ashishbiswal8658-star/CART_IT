@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="CART_IT - Elevate your standard with our premium luxury e-commerce catalog platform. Explore high-end tech, accessories, living decor, and active wearables with instant order tracking.">
+  <title>CART_IT | Premium Luxury E-Commerce</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="container header-container">
+      <div id="nav-logo" class="logo">
+        CART<span>_IT</span>
+      </div>
+
+      <!-- Live Search Autocomplete Box -->
+      <div class="search-bar-container">
+        <div class="search-input-wrapper">
+          <i class="lucide-search search-icon icon-xl"></i>
+          <input type="text" id="search-input" placeholder="Search premium items, brands, or collections..."
+            autocomplete="off">
+        </div>
+        <div id="search-suggestions" class="search-suggestions"></div>
+      </div>
+
+      <!-- Nav Button Actions -->
+      <div class="nav-actions">
+        <button id="theme-toggle" class="nav-btn" aria-label="Toggle Theme Mode">
+          <i class="lucide-moon icon-xl"></i>
+        </button>
+        <button id="nav-home" class="nav-btn fw-700">Home</button>
+        <button id="nav-admin" class="nav-btn">Seller Panel</button>
+
+        <button id="wishlist-trigger" class="nav-btn" aria-label="View Wishlist">
+          <i class="lucide-heart icon-xl"></i>
+          <span id="wishlist-badge" class="badge"></span>
+        </button>
+
+        <button id="cart-trigger" class="nav-btn-text" aria-label="Open Shopping Cart">
+          <i class="lucide-shopping-cart icon-lg"></i>
+          Cart
+          <span id="cart-badge" class="badge badge-accent"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dynamic Category Bar -->
+  <nav id="categories-bar" class="categories-bar">
+    <div class="container categories-container">
+      <button class="category-chip active" data-category="All">All Exclusive</button>
+      <button class="category-chip" data-category="Tech">Tech</button>
+      <button class="category-chip" data-category="Audio">Audio</button>
+      <button class="category-chip" data-category="Living">Living Decor</button>
+      <button class="category-chip" data-category="Wearables">Wearables</button>
+    </div>
+  </nav>
+
+  <!-- ========================================== -->
+  <!-- MAIN VIEWS WRAPPER -->
+  <!-- ========================================== -->
+  <main class="container">
+
+    <!-- 1. HOME & CATALOG VIEW -->
+    <section id="home-view" class="home-view">
+
+      <!-- Luxury Hero Banner Slider -->
+      <div class="hero-section">
+        <div class="hero-slider">
+
+          <!-- Slide 1 -->
+          <div class="slide active">
+            <img class="slide-img"
+              src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80"
+              alt="Audio Showcase">
+            <div class="slide-content">
+              <span class="slide-tag">New Horizon</span>
+              <h2 class="slide-title">Acoustic Excellence Redefined</h2>
+              <p class="slide-desc">Immerse yourself in sheer auditory bliss with our premium studio-grade sound systems
+                and active ANC noise-cancelling equipment.</p>
+              <button class="btn-premium" onclick="openProductModal('p1')">
+                Explore AeroSound <i class="lucide-arrow-right icon-md"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <img class="slide-img"
+              src="https://images.unsplash.com/photo-1496181130204-755241544e35?auto=format&fit=crop&w=1200&q=80"
+              alt="Tech Showcase">
+            <div class="slide-content">
+              <span class="slide-tag">Apex Series</span>
+              <h2 class="slide-title">Sleek Performance. Zero Noise.</h2>
+              <p class="slide-desc">Explore the revolutionary InfinityBook Air with silent thermal heat dissipators and
+                an immersive retina color spectrum screen.</p>
+              <button class="btn-premium" onclick="openProductModal('p3')">
+                Discover Performance <i class="lucide-arrow-right icon-md"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <img class="slide-img"
+              src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1200&q=80"
+              alt="Living Showcase">
+            <div class="slide-content">
+              <span class="slide-tag">Living Spaces</span>
+              <h2 class="slide-title">Handcrafted Amber Auras</h2>
+              <p class="slide-desc">Transform your bedroom layout into a sanctuary with intelligent brass-brushed touch
+                dimming light fixtures.</p>
+              <button class="btn-premium" onclick="openProductModal('p4')">
+                Shop Luminary <i class="lucide-arrow-right icon-md"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <div class="slider-dots">
+          <span class="slider-dot active"></span>
+          <span class="slider-dot"></span>
+          <span class="slider-dot"></span>
+        </div>
+      </div>
+
+      <!-- Grid Catalog Area -->
+      <div class="catalog-section">
+        <div class="catalog-layout">
+
+          <!-- Filter Sidebar Column -->
+          <aside class="filters-sidebar">
+            <div class="filter-group">
+              <h3 class="filter-title">Filter by Price</h3>
+              <div class="price-range-inputs">
+                <div class="price-input-wrapper">
+                  <span>$</span>
+                  <input type="number" id="price-min" value="0" min="0" max="2000" aria-label="Minimum Price">
+                </div>
+                <span class="text-tertiary">to</span>
+                <div class="price-input-wrapper">
+                  <span>$</span>
+                  <input type="number" id="price-max" value="2000" min="0" max="2000" aria-label="Maximum Price">
+                </div>
+              </div>
+              <input type="range" id="price-range-slider" min="0" max="2000" value="2000" class="price-range-slider"
+                aria-label="Price range slider">
+            </div>
+
+            <div class="filter-group">
+              <h3 class="filter-title">Customer Ratings</h3>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" value="5">
+                <span class="stars-container"><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-filled"></i></span>
+                <span>5 Stars</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" value="4">
+                <span class="stars-container"><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-filled"></i><i class="lucide-star icon-sm icon-star-empty"></i></span>
+                <span>4 Stars & Up</span>
+              </label>
+            </div>
+          </aside>
+
+          <!-- Store Grid Content Column -->
+          <div>
+            <div class="catalog-header">
+              <span id="results-count" class="results-count">12 premium products found</span>
+              <div class="sort-select-wrapper">
+                <label for="sort-select" class="fs-md text-secondary fw-600 mr-8">Sort
+                  By</label>
+                <select id="sort-select">
+                  <option value="featured">Featured Masterpieces</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="rating">Top Rated</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="products-grid" class="products-grid">
+              <!-- Dynamically populated via app.js -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SHIPMENT ORDER TRACKING VIEW -->
+    <section id="tracking-view" class="tracking-view">
+      <div class="tracking-card">
+
+        <div class="tracking-header-block">
+          <div>
+            <span class="header-tracking-info">Active
+              Delivery Timeline</span>
+            <h2 class="fs-lg mt-4">Shipment Tracking</h2>
+          </div>
+          <div class="text-right">
+            <div id="order-tracking-id" class="fs-title fw-700">
+              CRIT-82947192</div>
+            <div class="tracking-label-sm">Tracking Reference Number</div>
+          </div>
+        </div>
+
+        <div class="grid-2-col grid-bg-tertiary">
+          <div>
+            <div class="tracking-label-sm">Items Purchased</div>
+            <div id="order-items-count" class="tracking-value">3 exclusive pieces
+            </div>
+          </div>
+          <div>
+            <div class="tracking-label-sm">Estimated Delivery</div>
+            <div id="order-est-delivery" class="tracking-delivery-date">
+              Thursday, June 4</div>
+          </div>
+        </div>
+
+        <!-- Simulated Horizontal Progress Timeline -->
+        <div class="tracking-timeline-horizontal">
+
+          <div class="timeline-step-indicator completed">
+            <div class="timeline-node"><i class="lucide-shopping-bag icon-md"></i></div>
+            <span class="step-label-sm">Ordered</span>
+          </div>
+
+          <div class="timeline-step-indicator">
+            <div class="timeline-node"><i class="lucide-package icon-md"></i></div>
+            <span class="step-label-sm">Packed</span>
+          </div>
+
+          <div class="timeline-step-indicator">
+            <div class="timeline-node"><i class="lucide-truck icon-md"></i></div>
+            <span class="step-label-sm">Shipped</span>
+          </div>
+
+          <div class="timeline-step-indicator">
+            <div class="timeline-node"><i class="lucide-home icon-md"></i></div>
+            <span class="step-label-sm">Out for Delivery</span>
+          </div>
+
+          <div class="timeline-step-indicator">
+            <div class="timeline-node"><i class="lucide-check-circle icon-md"></i></div>
+            <span class="step-label-sm">Delivered</span>
+          </div>
+
+          <div class="timeline-line">
+            <div id="tracking-line-progress" class="timeline-line-progress"></div>
+          </div>
+        </div>
+
+        <!-- Simulation controls -->
+        <div class="border-top-section text-center">
+          <button id="btn-fast-forward" class="btn-simulate">
+            Fast Forward Delivery <i class="lucide-zap icon-md"></i>
+          </button>
+          <p class="fs-sm text-secondary mt-12">Our background
+            timeline shifts every 12 seconds.<br>Click the fast-forward button to immediately skip order shipment
+            stages.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. SELLER ADMIN VIEW -->
+    <section id="admin-view" class="admin-view">
+
+      <!-- Analytical Statistics Widgets Row -->
+      <div class="admin-grid-top">
+        <div class="stat-widget">
+          <div>
+            <span class="fs-sm text-secondary fw-600">Gross Store Income</span>
+            <div id="stat-sales" class="stat-val-large">$14,842.50</div>
+          </div>
+          <div class="stat-icon"><i class="lucide-dollar-sign icon-xl"></i></div>
+        </div>
+
+        <div class="stat-widget">
+          <div>
+            <span class="fs-sm text-secondary fw-600">Total Orders Fulfilled</span>
+            <div id="stat-orders" class="stat-val-large">182 orders</div>
+          </div>
+          <div class="stat-icon"><i class="lucide-shopping-cart icon-xl"></i></div>
+        </div>
+
+        <div class="stat-widget">
+          <div>
+            <span class="fs-sm text-secondary fw-600">Active Store Inventory</span>
+            <div id="stat-inventory" class="stat-val-large">102 items</div>
+          </div>
+          <div class="stat-icon"><i class="lucide-package icon-xl"></i></div>
+        </div>
+      </div>
+
+      <div class="admin-layout-split">
+
+        <!-- Inventory List Card -->
+        <div class="admin-panel-card">
+          <h3 class="fs-title border-bottom-section">
+            Catalog Inventory</h3>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-products-table">
+                <!-- Populated dynamically via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Add Custom Product Form Card -->
+        <div class="admin-panel-card">
+          <h3 class="fs-title border-bottom-section">
+            Add New Luxury Masterpiece</h3>
+          <form id="admin-add-product-form">
+            <div class="form-field">
+              <label for="prod-name">Product Name *</label>
+              <input type="text" id="prod-name" placeholder="e.g. AeroSound Eclipse" required>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label for="prod-category">Category *</label>
+                <select id="prod-category">
+                  <option value="Tech">Tech</option>
+                  <option value="Audio">Audio</option>
+                  <option value="Living">Living Decor</option>
+                  <option value="Wearables">Wearables</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="prod-stock">Initial Stock *</label>
+                <input type="number" id="prod-stock" value="10" min="1" required>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-field">
+                <label for="prod-price">Retail Price ($) *</label>
+                <input type="number" id="prod-price" placeholder="199.99" step="0.01" min="1" required>
+              </div>
+              <div class="form-field">
+                <label for="prod-original-price">Original Price ($)</label>
+                <input type="number" id="prod-original-price" placeholder="249.99" step="0.01" min="1">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="prod-image">High-Res Unsplash Image URL</label>
+              <input type="url" id="prod-image" placeholder="Leave empty for generic luxury placeholder image">
+            </div>
+
+            <div class="form-field">
+              <label for="prod-desc">Elegant Product Description *</label>
+              <textarea id="prod-desc" class="textarea-product" placeholder="Crafted with pure titanium grids and dynamic audio buffers..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-checkout btn-indigo">
+              Add Masterpiece <i class="lucide-plus icon-md"></i>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL / OVERLAY SYSTEMS -->
+  <!-- ========================================== -->
+
+  <!-- 1. DETAIL SLIDING DRAWER: PRODUCT OVERVIEW -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+
+      <!-- Header Close controls -->
+      <div class="drawer-header no-border-bottom">
+        <span class="drawer-header-text">Product Brief</span>
+        <button class="drawer-close modal-close-trigger" aria-label="Close Product Details"><i
+            class="lucide-x"></i></button>
+      </div>
+
+      <div class="product-modal-body">
+
+        <!-- Left gallery slider -->
+        <div class="modal-gallery-container">
+          <div class="modal-main-img-wrapper">
+            <img id="modal-main-img" class="modal-main-img" src="" alt="Main Gallery Focus">
+          </div>
+          <div id="modal-thumbnails" class="modal-thumbnails">
+            <!-- Thumbs generated via js -->
+          </div>
+        </div>
+
+        <!-- Right specification details -->
+        <div class="product-detail-info">
+          <span id="modal-category" class="detail-category">Tech</span>
+          <h2 id="modal-title" class="detail-title">Apex Chronos Smartwatch</h2>
+
+          <div class="detail-rating-row">
+            <span id="modal-rating-stars" class="stars-container"></span>
+            <span id="modal-rating-count" class="detail-rating-text">(148 reviews)</span>
+          </div>
+
+          <div class="detail-price-row">
+            <span id="modal-price-current" class="detail-price-current">$299.99</span>
+            <span id="modal-price-original" class="detail-price-original">$349.99</span>
+          </div>
+
+          <p id="modal-description" class="detail-desc">Premium titanium smart health tracker.</p>
+
+          <!-- Color options variant checklist -->
+          <div class="option-group">
+            <span class="option-label">Select Color Edition</span>
+            <div id="modal-colors" class="color-dots-list">
+              <!-- Color dots generated via js -->
+            </div>
+          </div>
+
+          <!-- Size options variant checklist -->
+          <div class="option-group" id="sizes-group-panel">
+            <span class="option-label">Select Size / Capacity</span>
+            <div id="modal-sizes" class="sizes-button-list">
+              <!-- Sizes items generated via js -->
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <button id="modal-btn-add" class="btn-detail-add">
+              Add To Cart Drawer <i class="lucide-shopping-bag icon-lg"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom dynamic panels tabs -->
+      <div class="modal-footer-section">
+        <div class="tabs-navigation">
+          <button id="tab-specs" class="tab-btn active">Technical Specifications</button>
+          <button id="tab-reviews" class="tab-btn">Verified Client Reviews</button>
+        </div>
+
+        <div id="panel-specs" class="tab-content-panel active">
+          <!-- Populated via js -->
+        </div>
+
+        <div id="panel-reviews" class="tab-content-panel">
+          <!-- Summary statistics -->
+          <div id="reviews-summary-block" class="reviews-summary-block">
+            <!-- Summary calculations generated via js -->
+          </div>
+          <!-- Reviews list -->
+          <div id="reviews-list-container" class="scrollable-reviews pr-8">
+            <!-- Reviews cards populated via js -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. CART DRAWER OVERLAY -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+  <div id="cart-drawer" class="drawer">
+    <div class="drawer-header">
+      <h3 class="cart-header-title">
+        <i class="lucide-shopping-cart icon-accent"></i> Shopping Cart
+      </h3>
+      <button class="drawer-close" aria-label="Close Shopping Cart"><i class="lucide-x"></i></button>
+    </div>
+
+    <!-- Scrollable cart items list -->
+    <div class="drawer-body">
+      <div id="cart-items-list" class="cart-items-list">
+        <!-- Generated dynamically via app.js -->
+      </div>
+    </div>
+
+    <!-- Static Drawer Footer Calculations -->
+    <div class="drawer-footer">
+      <!-- Promo code validator field -->
+      <div class="promo-input-group">
+        <input type="text" id="promo-code" placeholder="Enter coupon (e.g. CARTIT20)" aria-label="Coupon code input">
+        <button id="btn-promo-apply" class="btn-promo-apply">Apply</button>
+      </div>
+      <div id="promo-status-msg" class="promo-status-msg"></div>
+
+      <!-- Financial Calculations summary -->
+      <div class="cart-summary-line">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <div id="cart-discount-row" class="cart-summary-line text-error fw-600 hidden">
+        <span>Promo Discount</span>
+        <span id="cart-discount">-$0.00</span>
+      </div>
+      <div class="cart-summary-line mt-0">
+        <span>Standard Shipping</span>
+        <span class="text-success fw-600">Complimentary</span>
+      </div>
+
+      <div class="cart-summary-line total">
+        <span>Order Balance</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+
+      <button id="btn-checkout" class="btn-checkout">
+        Proceed to Checkout <i class="lucide-credit-card icon-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- 3. MULTI-STEP CHECKOUT SYSTEM -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content checkout-modal-content">
+
+      <!-- Checkout drawer header progress nodes -->
+      <div class="checkout-steps-bar">
+        <div class="checkout-step-indicator active">
+          <div class="step-node">1</div>
+          <span class="step-label">Shipping</span>
+        </div>
+        <div class="checkout-step-indicator">
+          <div class="step-node">2</div>
+          <span class="step-label">Payment</span>
+        </div>
+        <div class="checkout-step-indicator">
+          <div class="step-node">3</div>
+          <span class="step-label">Success</span>
+        </div>
+
+        <div class="checkout-steps-line">
+          <div id="checkout-steps-line-progress" class="checkout-steps-line-progress"></div>
+        </div>
+      </div>
+
+      <!-- Interactive Multi-Step Form body -->
+      <div class="checkout-body">
+
+        <!-- STEP 1: Shipping Addresses -->
+        <div class="checkout-step-pane active">
+          <h3 class="fs-title mt-0">Shipping & Concierge Address</h3>
+          <div class="form-field">
+            <label for="ship-name">Full Recipient Name *</label>
+            <input type="text" id="ship-name" placeholder="Johnathan Doe" value="Ashish Biswal" required>
+          </div>
+          <div class="form-field">
+            <label for="ship-address">Street Address *</label>
+            <input type="text" id="ship-address" placeholder="102 Exclusive Estates Lane"
+              value="7th Luxury Boulevard, Sector 4" required>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label for="ship-city">City *</label>
+              <input type="text" id="ship-city" placeholder="Beverly Hills" value="Bhubaneswar" required>
+            </div>
+            <div class="form-field">
+              <label for="ship-zip">Zip / Postal Code *</label>
+              <input type="text" id="ship-zip" placeholder="90210" value="751024" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Credit Card 3D Flip System -->
+        <div class="checkout-step-pane">
+
+          <!-- Flipping Credit Card Visualizer -->
+          <div class="card-preview-zone">
+            <div class="credit-card-container">
+              <div id="credit-card" class="credit-card">
+
+                <!-- Front Side Face -->
+                <div class="card-face front">
+                  <div class="flex-between">
+                    <div class="card-chip"></div>
+                    <span class="card-title">CARTIT
+                      CARD</span>
+                  </div>
+                  <div id="card-display-num" class="card-number-display">•••• •••• •••• ••••</div>
+                  <div class="card-holder-row">
+                    <div>
+                      <div class="card-display-label">Card Holder</div>
+                      <div id="card-display-name" class="card-holder-name">CARDHOLDER NAME</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="card-display-label">Expires</div>
+                      <div id="card-display-expiry" class="fw-600 mt-8">MM/YY</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Back Side Face -->
+                <div class="card-face back">
+                  <div class="card-black-stripe"></div>
+                  <div class="card-cvv-stripe">
+                    <div class="card-holder-info">
+                      <div class="card-display-label-sm">Security CVV</div>
+                      <div class="card-cvv-info">Authorized Sign Only</div>
+                    </div>
+                    <div id="card-display-cvv" class="card-cvv-val">•••</div>
+                  </div>
+                  <div class="card-footer-text">This
+                    card is issued by CART_IT VIP Banking Services. Subject to luxury platform agreements and client
+                    terms.</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Credit Card Input Fields -->
+          <div class="form-field">
+            <label for="card-number">Credit Card Number *</label>
+            <input type="text" id="card-number" placeholder="4111 2222 3333 4444" required>
+          </div>
+          <div class="form-field">
+            <label for="card-holder">Cardholder Full Name *</label>
+            <input type="text" id="card-holder" placeholder="JOHANATHAN DOE" required>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label for="card-expiry">Expiry Date (MM/YY) *</label>
+              <input type="text" id="card-expiry" placeholder="12/28" required>
+            </div>
+            <div class="form-field">
+              <label for="card-cvv">CVV (3 Digits) *</label>
+              <input type="password" id="card-cvv" placeholder="•••" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Place Order and Success Confetti -->
+        <div class="checkout-step-pane">
+          <div class="success-card">
+            <div class="success-icon-wrapper">
+              <i class="lucide-check"></i>
+            </div>
+            <h2 class="fs-lg mt-0">Your order has been placed!</h2>
+            <p class="success-message">
+              Thank you for choosing CART_IT. We have dispatched order receipt logs to your VIP inbox. Your order
+              packaging process begins shortly.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom controls footer -->
+      <div class="checkout-footer">
+        <button id="btn-checkout-prev" class="btn-checkout-nav prev">
+          <i class="lucide-chevron-left icon-md"></i> Back
+        </button>
+        <button id="btn-checkout-next" class="btn-checkout-nav next ml-auto">
+          Continue <i class="lucide-chevron-right icon-md"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- FLOATING CONCIERGE CHATBOT WIDGET -->
+  <!-- ========================================== -->
+  <button id="chatbot-trigger" class="chatbot-trigger" aria-label="Open support chat">
+    <i class="lucide-message-circle"></i>
+  </button>
+
+  <div id="chatbot-window" class="chatbot-window">
+    <div class="chatbot-header">
+      <div class="flex-center">
+        <div class="chatbot-status"></div>
+        <span class="chatbot-title-text">CART_IT AI Assistant</span>
+      </div>
+      <button id="chatbot-close" class="icon-error" aria-label="Close support chat"><i class="lucide-x icon-lg"></i></button>
+    </div>
+
+    <div id="chat-content" class="chatbot-body">
+      <!-- Conversation history loads dynamically -->
+    </div>
+
+    <div class="chatbot-quick-options">
+      <button class="quick-option-btn" data-topic="track">Track Shipment</button>
+      <button class="quick-option-btn" data-topic="return">Return Policy</button>
+      <button class="quick-option-btn" data-topic="discount">Get Discounts</button>
+      <button class="quick-option-btn" data-topic="contact">VIP Support</button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- FOOTER -->
+  <!-- ========================================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo footer-logo-style">
+            CART<span>_IT</span>
+          </div>
+          <p>Curating and delivering premium luxury lifestyles across technology interfaces and decor craftsmanship.
+            Inspired by Amazon and Flipkart, elevated for the extraordinary.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Exclusive Services</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="showPage('home')">Store Grid Collections</a></li>
+            <li><a href="#" onclick="showPage('tracking')">Live Tracking Center</a></li>
+            <li><a href="#" onclick="showPage('admin')">Sell With CART_IT</a></li>
+            <li><a href="#">VIP Concierge Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Customer Care</h4>
+          <ul class="footer-links">
+            <li><a href="#">Shipping & Deliveries</a></li>
+            <li><a href="#">Luxury Gift Card Options</a></li>
+            <li><a href="#">Platform Returns & Restocks</a></li>
+            <li><a href="#">FAQ Concierge</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>VIP Concierge Desk</h4>
+          <p>Have questions about a bespoke product or custom listing? Connect with our luxury representatives
+            immediately.</p>
+          <div class="footer-contact-bold">support@cartit.luxury</div>
+          <div class="footer-contact-small">24/7 Premium Call Line Ready</div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 CART_IT luxury platform. All VIP rights reserved. Built with pure luxury front-end
+          architecture.</span>
+        <div class="flex-gap">
+          <a href="#">Privacy Policy</a>
+          <a href="#">VIP User Agreement</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- EXTERNAL CONDUITS & SCRIPTS -->
+  <!-- ========================================== -->
+
+  <!-- Lucide CDN for standard scalable vector glyph support -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom MutationObserver dynamically mapping class indicators to SVG tags -->
+  <script>
+    // Create highly responsive DOM tree mutation listeners
+    const observer = new MutationObserver((mutations) => {
+      let needsIconRender = false;
+      mutations.forEach(mutation => {
+        if (mutation.addedNodes.length) {
+          mutation.addedNodes.forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              if (node.querySelector('i[class^="lucide-"]') || (node.tagName === 'I' && node.className.startsWith('lucide-'))) {
+                needsIconRender = true;
+              }
+            }
+          });
+        }
+      });
+      if (needsIconRender && window.lucide) {
+        document.querySelectorAll('i[class^="lucide-"]').forEach(el => {
+          const iconClass = el.className.split(' ').find(c => c.startsWith('lucide-'));
+          if (iconClass) {
+            const iconName = iconClass.replace('lucide-', '');
+            el.setAttribute('data-lucide', iconName);
+          }
+        });
+        lucide.createIcons();
+      }
+    });
+
+    // Begin scanning document trees
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Initial manual invocation triggers
+    window.addEventListener("load", () => {
+      document.querySelectorAll('i[class^="lucide-"]').forEach(el => {
+        const iconClass = el.className.split(' ').find(c => c.startsWith('lucide-'));
+        if (iconClass) {
+          const iconName = iconClass.replace('lucide-', '');
+          el.setAttribute('data-lucide', iconName);
+        }
+      });
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    });
+  </script>
+
+  <!-- Connect local database and application logic files -->
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
